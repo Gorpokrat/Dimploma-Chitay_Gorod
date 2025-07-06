@@ -1,14 +1,15 @@
+import pytest
+from selenium import webdriver
 from selenium.webdriver.common.by import By
-from .base_page import BasePage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-class MainPage(BasePage):
-    SEARCH_INPUT = (By.CSS_SELECTOR, 'input[type="search"]')
-    SEARCH_BUTTON = (By.CSS_SELECTOR, 'button[type="submit"]')
-    CART_ICON = (By.CSS_SELECTOR, '.header-cart')
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
 
-    def search_for(self, query):
-        self.wait_for_element(self.SEARCH_INPUT).send_keys(query)
-        self.click_element(self.SEARCH_BUTTON)
-
-    def go_to_cart(self):
-        self.click_element(self.CART_ICON)
+def test_open_main_page(driver):
+    driver.get("https://www.chitai-gorod.ru")
+    assert "Читай-город" in driver.title
