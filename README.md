@@ -20,3 +20,17 @@
 
 ```bash
 pip install -r requirements.txt
+# Тесты проекта
+
+## Запуск тестов
+
+### Только UI тесты
+```bash
+pytest tests/test_UI.py -v --alluredir=allure-results
+pytest tests/ -v --alluredir=allure-results
+
+# Запуск локального сервера отчета и автоматическое открытие в браузере:
+allure serve allure-results
+# Или генерация статического отчета:
+allure generate allure-results -o allure-report --clean
+
